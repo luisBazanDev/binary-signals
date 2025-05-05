@@ -121,9 +121,6 @@ function drawNrzI(value) {
   const context = canvas.getContext("2d");
   context.clearRect(0, 0, cellWidth * size + startWidth, cellHeight);
 
-  Draw.drawCellBorder(context, 0, 0, startWidth, cellHeight, "TOP");
-  Draw.drawCellBorder(context, 0, 0, startWidth, cellHeight, "BOTTOM");
-
   if (START_DOWN)
     Draw.drawLine(context, 0, 0, startWidth, cellHeight, "BOTTOM", "BLUE");
   else Draw.drawLine(context, 0, 0, startWidth, cellHeight, "TOP", "BLUE");
@@ -225,10 +222,10 @@ function differentialManchester(value) {
   context.clearRect(0, 0, cellWidth * size, cellHeight);
 
   if (START_DOWN)
-    Draw.drawCellBorder(context, 0, 0, startWidth, cellHeight, "TOP");
-  else Draw.drawCellBorder(context, 0, 0, startWidth, cellHeight, "BOTTOM");
+    Draw.drawLine(context, 0, 0, startWidth, cellHeight, "BOTTOM", "BLUE");
+  else Draw.drawLine(context, 0, 0, startWidth, cellHeight, "TOP", "BLUE");
 
-  let inverted = START_DOWN;
+  let isDown = START_DOWN;
 
   for (let i = 0; i < size; i++) {
     const x = i * cellWidth + startWidth;
@@ -239,31 +236,75 @@ function differentialManchester(value) {
     const nowValue = value[i];
 
     if (nowValue === "0") {
-      inverted = !inverted;
-    }
-
-    if (inverted) {
-      Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "TOP", "BLUE");
-      Draw.drawLine(
-        context,
-        x + cellWidth / 2,
-        y,
-        cellWidth / 2,
-        cellHeight,
-        "BOTTOM",
-        "BLUE"
-      );
+      Draw.drawLine(context, x, y, cellWidth, cellHeight, "LEFT", "RED");
+      if (isDown) {
+        Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "TOP", "BLUE");
+        Draw.drawLine(context, x, y, cellWidth, cellHeight, "MIDDLE", "RED");
+        Draw.drawLine(
+          context,
+          x + cellWidth / 2,
+          y,
+          cellWidth / 2,
+          cellHeight,
+          "BOTTOM",
+          "BLUE"
+        );
+      } else {
+        Draw.drawLine(
+          context,
+          x,
+          y,
+          cellWidth / 2,
+          cellHeight,
+          "BOTTOM",
+          "BLUE"
+        );
+        Draw.drawLine(context, x, y, cellWidth, cellHeight, "MIDDLE", "RED");
+        Draw.drawLine(
+          context,
+          x + cellWidth / 2,
+          y,
+          cellWidth / 2,
+          cellHeight,
+          "TOP",
+          "BLUE"
+        );
+      }
     } else {
-      Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "BOTTOM", "BLUE");
-      Draw.drawLine(
-        context,
-        x + cellWidth / 2,
-        y,
-        cellWidth / 2,
-        cellHeight,
-        "TOP",
-        "BLUE"
-      );
+      if (isDown) {
+        Draw.drawLine(
+          context,
+          x,
+          y,
+          cellWidth / 2,
+          cellHeight,
+          "BOTTOM",
+          "BLUE"
+        );
+        Draw.drawLine(context, x, y, cellWidth, cellHeight, "MIDDLE", "RED");
+        Draw.drawLine(
+          context,
+          x + cellWidth / 2,
+          y,
+          cellWidth / 2,
+          cellHeight,
+          "TOP",
+          "BLUE"
+        );
+      } else {
+        Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "TOP", "BLUE");
+        Draw.drawLine(context, x, y, cellWidth, cellHeight, "MIDDLE", "RED");
+        Draw.drawLine(
+          context,
+          x + cellWidth / 2,
+          y,
+          cellWidth / 2,
+          cellHeight,
+          "BOTTOM",
+          "BLUE"
+        );
+      }
+      isDown = !isDown;
     }
   }
 }
