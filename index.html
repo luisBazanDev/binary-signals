@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binary Signals</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      .btn-disable {
+        @apply bg-gray-300 text-gray-500 cursor-not-allowed;
+      }
+
+      .btn-primary {
+        @apply bg-blue-300;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="w-full flex flex-col h-screen font-mono items-center p-4">
+      <div class="flex flex-col gap-4 items-center">
+        <h1 class="text-3xl font-bold">Binary Signals</h1>
+
+        <div class="flex flex-col xl:flex-row gap-4">
+          <input
+            id="binary"
+            type="text"
+            placeholder="Type your binary number"
+            class="border border-black px-2 py-1 w-full focus:outline-none xl:min-w-96"
+            value="1 0 0 0 0 0 0 1 0 1 0 1 0 1 1 0"
+          />
+          <div class="flex flex-col">
+            <h3 class="flex w-20">Start on</h3>
+            <select
+              name="start_on"
+              id="start_on"
+              class="border border-black w-full active:outline-none focus:outline-none"
+            >
+              <option value="true">DOWN</option>
+              <option value="false">UP</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="flex w-full flex-col p-4 items-center justify-between">
+        <h3>Normal Sequence</h3>
+        <canvas id="normal"></canvas>
+        <div class="flex gap-4 mt-4">
+          <button
+            class="bg-blue-300 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-all active:scale-95"
+            onclick="download('normal')"
+          >
+            Download image
+          </button>
+        </div>
+      </div>
+      <div class="flex w-full flex-col p-4 items-center justify-between">
+        <h3>NRZ-L</h3>
+        <canvas id="nrz-l"></canvas>
+        <div class="flex gap-4 mt-4">
+          <button
+            class="bg-blue-300 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-all active:scale-95"
+            onclick="download('nrz-l')"
+          >
+            Download image
+          </button>
+        </div>
+      </div>
+      <div class="flex w-full flex-col p-4 items-center justify-between">
+        <h3>NRZ-I</h3>
+        <canvas id="nrz-i"></canvas>
+        <div class="flex gap-4 mt-4">
+          <button
+            class="bg-blue-300 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-all active:scale-95"
+            onclick="download('nrz-i')"
+          >
+            Download image
+          </button>
+        </div>
+      </div>
+      <div class="flex w-full flex-col p-4 items-center justify-between">
+        <h3>Manchester</h3>
+        <canvas id="manchester"></canvas>
+        <div class="flex gap-4 mt-4">
+          <button
+            class="bg-blue-300 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-all active:scale-95"
+            onclick="download('manchester')"
+          >
+            Download image
+          </button>
+        </div>
+      </div>
+      <div class="flex w-full flex-col p-4 items-center justify-between">
+        <h3>Differential Manchester</h3>
+        <canvas id="m-differential"></canvas>
+        <div class="flex gap-4 mt-4">
+          <button
+            class="bg-blue-300 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-all active:scale-95"
+            onclick="download('differential-manchester')"
+          >
+            Download image
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
