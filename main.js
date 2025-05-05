@@ -209,6 +209,65 @@ function drawManchester(value) {
   }
 }
 
+/**
+ * @param {string} value
+ */
+function differentialManchester(value) {
+  const canvas = document.getElementById("differential-manchester");
+  const size = value.length;
+  const cellWidth = 60;
+  const cellHeight = 100;
+  const startWidth = cellWidth / 2;
+
+  canvas.width = cellWidth * size + startWidth;
+  canvas.height = cellHeight + startWidth;
+  const context = canvas.getContext("2d");
+  context.clearRect(0, 0, cellWidth * size, cellHeight);
+
+  if (START_DOWN)
+    Draw.drawCellBorder(context, 0, 0, startWidth, cellHeight, "TOP");
+  else Draw.drawCellBorder(context, 0, 0, startWidth, cellHeight, "BOTTOM");
+
+  let inverted = START_DOWN;
+
+  for (let i = 0; i < size; i++) {
+    const x = i * cellWidth + startWidth;
+    const y = 0;
+
+    Draw.drawCellBorder(context, x, y, cellWidth, cellHeight, "ALL");
+
+    const nowValue = value[i];
+
+    if (nowValue === "0") {
+      inverted = !inverted;
+    }
+
+    if (inverted) {
+      Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "TOP", "BLUE");
+      Draw.drawLine(
+        context,
+        x + cellWidth / 2,
+        y,
+        cellWidth / 2,
+        cellHeight,
+        "BOTTOM",
+        "BLUE"
+      );
+    } else {
+      Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "BOTTOM", "BLUE");
+      Draw.drawLine(
+        context,
+        x + cellWidth / 2,
+        y,
+        cellWidth / 2,
+        cellHeight,
+        "TOP",
+        "BLUE"
+      );
+    }
+  }
+}
+
 function drawMain() {
   if (!checkInput()) return;
 
@@ -218,6 +277,7 @@ function drawMain() {
   drawNrzL(value);
   drawNrzI(value);
   drawManchester(value);
+  differentialManchester(value);
 }
 
 // Listeners
