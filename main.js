@@ -333,3 +333,35 @@ select.addEventListener("change", (event) => {
 });
 
 if (checkInput()) drawMain();
+
+function download(canva_id) {
+  const canvas = document.getElementById(canva_id);
+  const link = document.createElement("a");
+  link.download = `${canva_id}.png`;
+  link.href = canvas.toDataURL("image/png", 1.0);
+  link.click();
+  link.delete();
+  link.remove();
+}
+
+document.getElementById("download-normal").addEventListener("click", () => {
+  download("normal");
+});
+
+document.getElementById("download-nrz-l").addEventListener("click", () => {
+  download("nrz-l");
+});
+
+document.getElementById("download-nrz-i").addEventListener("click", () => {
+  download("nrz-i");
+});
+
+document.getElementById("download-manchester").addEventListener("click", () => {
+  download("manchester");
+});
+
+document
+  .getElementById("download-differential-manchester")
+  .addEventListener("click", () => {
+    download("differential-manchester");
+  });
