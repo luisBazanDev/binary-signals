@@ -151,6 +151,64 @@ function drawNrzI(value) {
   }
 }
 
+/**
+ * @param {string} value
+ */
+function drawManchester(value) {
+  const canvas = document.getElementById("manchester");
+  const size = value.length;
+  const cellWidth = 60;
+  const cellHeight = 100;
+
+  canvas.width = cellWidth * size;
+  canvas.height = cellHeight;
+  const context = canvas.getContext("2d");
+  context.clearRect(0, 0, cellWidth * size, cellHeight);
+
+  let lastValue = value[0] === "1" ? "0" : "1";
+
+  for (let i = 0; i < size; i++) {
+    const x = i * cellWidth;
+    const y = 0;
+
+    Draw.drawCellBorder(context, x, y, cellWidth, cellHeight, "ALL");
+
+    const nowValue = value[i];
+
+    if (lastValue === nowValue) {
+      Draw.drawLine(context, x, y, cellWidth, cellHeight, "LEFT", "RED");
+    }
+
+    if (nowValue === "1") {
+      Draw.drawLine(context, x, y, cellWidth, cellHeight, "MIDDLE", "RED");
+      Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "BOTTOM", "BLUE");
+      Draw.drawLine(
+        context,
+        x + cellWidth / 2,
+        y,
+        cellWidth / 2,
+        cellHeight,
+        "TOP",
+        "BLUE"
+      );
+    } else {
+      Draw.drawLine(context, x, y, cellWidth, cellHeight, "MIDDLE", "RED");
+      Draw.drawLine(context, x, y, cellWidth / 2, cellHeight, "TOP", "BLUE");
+      Draw.drawLine(
+        context,
+        x + cellWidth / 2,
+        y,
+        cellWidth / 2,
+        cellHeight,
+        "BOTTOM",
+        "BLUE"
+      );
+    }
+
+    lastValue = nowValue;
+  }
+}
+
 function drawMain() {
   if (!checkInput()) return;
 
@@ -159,6 +217,7 @@ function drawMain() {
   drawNormal(value);
   drawNrzL(value);
   drawNrzI(value);
+  drawManchester(value);
 }
 
 // Listeners
